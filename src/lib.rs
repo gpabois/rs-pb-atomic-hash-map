@@ -60,7 +60,10 @@ impl<K: Hash, V> Drop for Table<K,V> {
     fn drop(&mut self) {
         unsafe {
             for i in 0..self.capacity {
-                self.buckets.add(i).drop_in_place();
+                self
+                    .buckets
+                    .add(i)
+                    .drop_in_place();
             }
 
             dealloc(self.buckets.cast().as_ptr(), self.buckets_layout);
@@ -73,15 +76,15 @@ impl<K: Hash,V> Table<K,V> {
         let buckets_layout = Layout::array::<Bucket<K,V>>(capacity).unwrap();
 
         unsafe {
-            let buckets= NonNull::new(
+            let buckets: NonNull<Bucket<K, V>> = NonNull::new(
                 alloc(buckets_layout)
                 .cast::<Bucket<K,V>>()
             ).unwrap();
 
             // Initialise all buckets.
             for i in 0..capacity {
-                let mut bucket_ptr = buckets.add(i);
-                *bucket_ptr.as_mut() = Bucket::new();
+                let bucket_ptr = buckets.add(i);
+                *bucket_ptr.as_ptr() = Bucket::new();
             }
 
             let length = AtomicUsize::new(0);
@@ -179,8 +182,8 @@ mod tests {
     use crate::AtomicHashMap;
 
     #[test]
-    fn test_borrow_unexisting_alue() {
-        let map = AtomicHashMap::<u32, u32>::new(30);
-        assert_eq!(map.borrow(&10).copied(), Some(20));
+    fn test_borrow_unexisting_value() {
+        let map = AtomicHashMap::<u32, u32>::new(10);
+        assert_eq!(map.borrow(&10).copied(), None);
     }
 }
