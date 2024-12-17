@@ -3,5 +3,8 @@ name = "pb-atomic-hash-map"
 version = "0.1.0"
 edition = "2021"
 description = "An atomic hash map"
+license-file = "LICENSE.txt"
+homepage = "https://github.com/gpabois/rs-pb-atomic-hash-map"
+
 [dependencies]
 pb-atomic-linked-list = "0.1.3"
