@@ -11,6 +11,6 @@ dependencies = [
 
 [[package]]
 name = "pb-atomic-linked-list"
-version = "0.1.4"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a8bd5136e2eb1f406df4b51e34547bc0f57b1f9b55d1afd10d3ea8f4885da13"
+checksum = "bde9a220afdf4b8d4a7d13d471c7affd4e401f11dc418a3acc87c177080d8650"
